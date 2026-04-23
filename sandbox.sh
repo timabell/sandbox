@@ -4,7 +4,7 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SANDBOX_HOME="/home/user"
 SANDBOX_CACHE="${SANDBOX_CACHE:-$HOME/.cache/sandbox-shared}"
-mkdir -p "$SANDBOX_CACHE"/{.npm,.nuget,.local/{share/mise,state/mise}}
+mkdir -p "$SANDBOX_CACHE"/{.npm,.nuget,.local/{share/mise,share/NuGet,state/mise}}
 
 # Split args: paths, --env-file flags, and extra bwrap args (after "--")
 paths=()
@@ -59,6 +59,7 @@ args=(
   --ro-bind "$SANDBOX_CACHE/.local" "$SANDBOX_HOME/.local"
   # allow writes to specific tooling for cross-sandbox sharing of tool installs
   --bind "$SANDBOX_CACHE/.local/share/mise" "$SANDBOX_HOME/.local/share/mise"
+  --bind "$SANDBOX_CACHE/.local/share/NuGet" "$SANDBOX_HOME/.local/share/NuGet"
   --bind "$SANDBOX_CACHE/.local/state/mise" "$SANDBOX_HOME/.local/state/mise"
 
   # claude config + state (future work to deny write)
