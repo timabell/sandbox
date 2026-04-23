@@ -25,7 +25,7 @@ A bubblewrap (bwrap) sandbox for running Claude Code and npm/dotnet builds in is
 ./sandbox.sh ~/work -- --setenv API_KEY val
 
 # Inject .env secrets into build sandbox
-./sandbox.sh ~/work -- $(./dotenv2bwrap.sh ~/private/some.env)
+./sandbox.sh ~/work --env-file ~/private/some.env
 ```
 
 ## Development Notes

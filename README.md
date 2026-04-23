@@ -26,7 +26,7 @@ Inspired by [Patrick McCanna's detailed writeup on Claude Code constrained by bu
 ./sandbox.sh ~/work -- --bind ~/build-cache /home/user/build-cache
 
 # Inject .env secrets into a build sandbox
-./sandbox.sh ~/work -- $(./dotenv2bwrap.sh ~/private/some.env)
+./sandbox.sh ~/work --env-file ~/private/some.env
 ```
 
 ## Dependencies

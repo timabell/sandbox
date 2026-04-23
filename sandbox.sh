@@ -5,17 +5,24 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SANDBOX_HOME="/home/user"
 MISE_DATA="$HOME/.local/share/mise"
 
-# Split args on "--": paths before, extra bwrap args after
+# Split args: paths, --env-file flags, and extra bwrap args (after "--")
 paths=()
+env_files=()
 extra_args=()
 while [[ $# -gt 0 ]]; do
   if [[ "$1" == "--" ]]; then
     shift
     extra_args=("$@")
     break
+  elif [[ "$1" == "--env-file" ]]; then
+    shift
+    [[ -f "${1:-}" ]] || { echo "Error: env file not found: ${1:-}" >&2; exit 1; }
+    env_files+=("$1")
+    shift
+  else
+    paths+=("$1")
+    shift
   fi
-  paths+=("$1")
-  shift
 done
 # Default to $PWD if no paths given
 if [[ ${#paths[@]} -eq 0 ]]; then paths=("$PWD"); fi
@@ -87,6 +94,16 @@ else
   done
   args+=(--setenv SANDBOX_OUTER_PWD "$outer_list")
 fi
+
+# Load .env files into --setenv args (handles spaces and quotes correctly)
+for env_file in "${env_files[@]}"; do
+  while IFS='=' read -r key value; do
+    [[ -n "$key" && "$key" != \#* ]] || continue
+    value="${value#\"}" ; value="${value%\"}"
+    value="${value#\'}" ; value="${value%\'}"
+    args+=(--setenv "$key" "$value")
+  done < "$env_file"
+done
 
 # Append any extra bwrap args passed after "--"
 args+=("${extra_args[@]}")
