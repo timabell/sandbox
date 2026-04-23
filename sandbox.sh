@@ -44,8 +44,6 @@ args=(
 
   # mise-managed toolchains (node, dotnet, claude)
   --ro-bind "$MISE_DATA" "$SANDBOX_HOME/.local/share/mise"
-  --ro-bind "$HOME/.config/mise" "$SANDBOX_HOME/.config/mise"
-  --ro-bind "$HOME/dm" "$HOME/dm"               # symlink target for dotfiles managed via ~/dm, without this linked config files can't be read
 
   # claude config + state (future work to deny write)
   --bind "$HOME/.claude" "$SANDBOX_HOME/.claude"
@@ -56,6 +54,9 @@ args=(
 
   # shell profile that activates mise
   --ro-bind "$SCRIPT_DIR/sandbox.bashrc" "$SANDBOX_HOME/.bashrc"
+
+  # bind dotfile to home folder
+  --ro-bind "$SCRIPT_DIR/dotfiles/.config/" "$SANDBOX_HOME/.config"
 
   --unshare-pid                         # own PID namespace so /proc doesn't leak host processes
   # --new-session not needed: TIOCSTI injection blocked by kernel ≥6.2 (LEGACY_TIOCSTI=n)
