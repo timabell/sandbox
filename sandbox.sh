@@ -49,6 +49,7 @@ args=(
   --ro-bind /etc/hosts /etc/hosts
   --ro-bind /etc/ssl /etc/ssl           # TLS certificates (HTTPS for nuget, npm, claude API)
   --ro-bind /etc/passwd /etc/passwd     # user name resolution (needed for `claude --resume` to work)
+  --ro-bind /etc/alternatives /etc/alternatives  # symlink targets for /usr/bin (which, curl, etc.)
 
   # persistent cache directories shared across sandbox invocations
   --bind "$SANDBOX_CACHE/.npm" "$SANDBOX_HOME/.npm"
