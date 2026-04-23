@@ -1,2 +1,6 @@
 [tools]
 node = "24.5.0"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "dotnet", "ruby"]
+not_found_auto_install = false
