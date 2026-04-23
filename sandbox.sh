@@ -3,7 +3,8 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SANDBOX_HOME="/home/user"
-MISE_DATA="$HOME/.local/share/mise"
+SANDBOX_CACHE="${SANDBOX_CACHE:-$HOME/.cache/sandbox-shared}"
+mkdir -p "$SANDBOX_CACHE"/{.npm,.nuget,.local/{share/mise,state/mise}}
 
 # Split args: paths, --env-file flags, and extra bwrap args (after "--")
 paths=()
@@ -49,15 +50,19 @@ args=(
   --ro-bind /etc/ssl /etc/ssl           # TLS certificates (HTTPS for nuget, npm, claude API)
   --ro-bind /etc/passwd /etc/passwd     # user name resolution (needed for `claude --resume` to work)
 
-  # mise-managed toolchains (node, dotnet, claude)
-  --ro-bind "$MISE_DATA" "$SANDBOX_HOME/.local/share/mise"
+  # persistent cache directories shared across sandbox invocations
+  --bind "$SANDBOX_CACHE/.npm" "$SANDBOX_HOME/.npm"
+  --bind "$SANDBOX_CACHE/.nuget" "$SANDBOX_HOME/.nuget"
+
+  # .local read-only so unexpected writes fail explicitly
+  --ro-bind "$SANDBOX_CACHE/.local" "$SANDBOX_HOME/.local"
+  # allow writes to specific tooling for cross-sandbox sharing of tool installs
+  --bind "$SANDBOX_CACHE/.local/share/mise" "$SANDBOX_HOME/.local/share/mise"
+  --bind "$SANDBOX_CACHE/.local/state/mise" "$SANDBOX_HOME/.local/state/mise"
 
   # claude config + state (future work to deny write)
   --bind "$HOME/.claude" "$SANDBOX_HOME/.claude"
   --bind "$HOME/.claude.json" "$SANDBOX_HOME/.claude.json"
-
-  # nuget: packages, plugins (credential provider), and config
-  --bind "$HOME/.nuget" "$SANDBOX_HOME/.nuget"
 
   # shell profile that activates mise
   --ro-bind "$SCRIPT_DIR/sandbox.bashrc" "$SANDBOX_HOME/.bashrc"
