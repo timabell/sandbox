@@ -114,6 +114,22 @@ Revisit if:
 - Tooling improves (e.g. bwrap gains a built-in default profile).
 - We want to block io_uring (simplest win -- single syscall to deny).
 
+## References
+
+### LLM behaviour
+
+- [Claude Code doesn't respect settings.json deny block - Stack Overflow](https://stackoverflow.com/questions/79747164/claude-code-doesnt-respect-settings-json-deny-block)
+- [[BUG] Claude Code could read the .env content even .claude/settings.json is configured · Issue #8031 · anthropics/claude-code](https://github.com/anthropics/claude-code/issues/8031)
+- [Don’t let A.I. read your .env files Filip Hric](https://filiphric.com/dont-let-ai-read-your-env-files)
+- [1K+ cloud environments infected via Trivy attack • The Register](https://www.theregister.com/2026/03/24/1k_cloud_environments_infected_following/)
+
+
+### Supply chain attacks
+
+- [Another npm supply chain worm hits dev environments • The Register](https://www.theregister.com/2026/04/22/another_npm_supply_chain_attack/)
+- [Two different attackers poisoned popular open source tools • The Register](https://www.theregister.com/2026/04/11/trivy_axios_supply_chain_attacks/)
+
+
 ## License
 
 [GNU Affero General Public License v3.0](LICENSE)
