@@ -72,6 +72,10 @@ args=(
   # bind dotfile to home folder
   --ro-bind "$SCRIPT_DIR/dotfiles/.config/" "$SANDBOX_HOME/.config"
 
+  # dotfile from dotmatrix
+  --bind "$HOME/repo/dotmatrix/.gitconfig" "$SANDBOX_HOME/.gitconfig"
+  --bind "$HOME/repo/dotmatrix/.aliases" "$SANDBOX_HOME/.aliases"
+
   --unshare-pid                         # own PID namespace so /proc doesn't leak host processes
   # --new-session not needed: TIOCSTI injection blocked by kernel ≥6.2 (LEGACY_TIOCSTI=n)
 

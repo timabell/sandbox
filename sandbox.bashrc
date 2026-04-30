@@ -10,3 +10,5 @@ eval "$(mise activate bash)"
 export DOTNET_ROOT=$(mise where dotnet-core 2>/dev/null)
 
 export PS1="\n╭─[🫙 sandbox ${SANDBOX_OUTER_PWD:-?}] \w\n╰─\$ "
+
+source $HOME/.aliases
