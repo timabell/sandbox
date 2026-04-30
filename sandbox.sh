@@ -74,8 +74,11 @@ args=(
   --ro-bind "$SCRIPT_DIR/dotfiles/.gitconfig.local" "$SANDBOX_HOME/.gitconfig.local"
 
   # dotfile from dotmatrix
-  --bind "$HOME/repo/dotmatrix/.gitconfig" "$SANDBOX_HOME/.gitconfig"
-  --bind "$HOME/repo/dotmatrix/.aliases" "$SANDBOX_HOME/.aliases"
+  --ro-bind "$HOME/repo/dotmatrix/.gitconfig" "$SANDBOX_HOME/.gitconfig"
+  --ro-bind "$HOME/repo/dotmatrix/.aliases" "$SANDBOX_HOME/.aliases"
+
+  # llm rules
+  --ro-bind "$HOME/repo/claude-config/global/CLAUDE.md" "$SANDBOX_HOME/.claude/CLAUDE.md"
 
   --unshare-pid                         # own PID namespace so /proc doesn't leak host processes
   # --new-session not needed: TIOCSTI injection blocked by kernel ≥6.2 (LEGACY_TIOCSTI=n)
