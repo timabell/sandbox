@@ -71,6 +71,7 @@ args=(
 
   # bind dotfile to home folder
   --ro-bind "$SCRIPT_DIR/dotfiles/.config/" "$SANDBOX_HOME/.config"
+  --ro-bind "$SCRIPT_DIR/dotfiles/.gitconfig.local" "$SANDBOX_HOME/.gitconfig.local"
 
   # dotfile from dotmatrix
   --bind "$HOME/repo/dotmatrix/.gitconfig" "$SANDBOX_HOME/.gitconfig"
