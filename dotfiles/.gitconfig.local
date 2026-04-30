@@ -1,3 +1,5 @@
 [user]
  	email = sandbox@0x5.uk
  	name = "Sandbox"
+[commit]
+        gpgsign = false
